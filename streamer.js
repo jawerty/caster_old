@@ -47,7 +47,7 @@ function Streamer() {
 
                         startIndex += plus;
                         if (startIndex <= size) {
-                            window.requestAnimationFrame(inner_streamer)
+                            setTimout(function() {window.requestAnimationFrame(inner_streamer), 500});
                         } else {
                             self.push({
                                 end: true
