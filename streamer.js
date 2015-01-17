@@ -36,7 +36,7 @@ function Streamer() {
 			if(!blob) return;
                 var size = blob.size,
                     startIndex = 0,
-                    plus = 3000;
+                    plus = 2;
 
                 console.debug('one chunk size: <', plus, '>');
 
@@ -65,6 +65,7 @@ function Streamer() {
     function receive() {
         var sourceBuffer, mediaSource = new MediaSource();
         self.video.src = window.URL.createObjectURL(mediaSource);
+        console.log(mediaSource)
         mediaSource.addEventListener(prefix+'sourceopen', function () {
             self.receiver = mediaSource.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
             self.mediaSource = mediaSource;

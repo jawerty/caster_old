@@ -12,17 +12,7 @@
 	<script src="engine.io.js"></script>
 	<script src="https://webrtc-experiment.appspot.com/lib/RTCPeerConnection-v1.4.js"></script>
 	<script src="streamer.js"> </script>
-	<script>
-		var socket = new eio.Socket('ws://localhost:3000/');
-		socket.binaryType = 'blob';
-		socket.on('open', function () {
-			socket.send(new Int8Array(5));
-			socket.on('close', function(){ });
-			socket.on('chunk', function (data) {
-				console.log(data)
-			});
-		});
-	</script>
+	<script src="initDataChannel.js"></script>
 	
 </head>
 <body>

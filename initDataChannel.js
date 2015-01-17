@@ -5,7 +5,9 @@ var iceServers = {
 };
 
 var optionalRtpDataChannels = {
-    optional: []
+    optional: [{
+        RtpDataChannels: true
+    }]
 };
 
 var offerer = new webkitRTCPeerConnection(iceServers, optionalRtpDataChannels),
