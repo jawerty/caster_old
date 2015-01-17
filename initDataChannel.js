@@ -59,22 +59,24 @@ function createAnswer(offerSDP) {
 
 function setChannelEvents(channel, channelNameForConsoleOutput) {
     channel.onmessage = function (event) {
-        console.debug(channelNameForConsoleOutput, 'received a message:', event.data);
-        var data = JSON.parse(event.data);
 
-        chunkData = []
+        console.debug(channelNameForConsoleOutput, 'received a message:', event.data); 
 
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-              chunkData.push(data[key]);  
-            }
-        }
-        
-        onData(chunkData); 
-        
         if (channelNameForConsoleOutput == "answerer") {
-            
-            arrayToStoreChunks.push(data.message); // pushing chunks in array
+            var data = JSON.parse(event.data);
+
+            console.log("answerer ran")
+            chunkData = []
+
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                  chunkData.push(data[key]);  
+                }
+            }
+
+            onData(chunkData);
+
+            arrayToStoreChunks.push(data.message); 
 
             if (data.last) {
                 console.log("saveToDisk")
@@ -83,7 +85,7 @@ function setChannelEvents(channel, channelNameForConsoleOutput) {
             }
 
         } else if (channelNameForConsoleOutput == "offerer") {
-            
+            console.log("sent to offerer")
         }
     };
 

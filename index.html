@@ -9,7 +9,7 @@
 			border: 1px solid #ccc;
 		}
 	</style>
-	<script src="engine.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://webrtc-experiment.appspot.com/lib/RTCPeerConnection-v1.4.js"></script>
 	<script src="streamer.js"> </script>
 	<script src="initDataChannel.js"></script>
@@ -24,7 +24,10 @@
 
 	function onData(data) {
 	    if (data.end) streamer.end();
-	    else streamer.append(data);
+	    else {
+	    	streamer.append(data)
+	    }
+
 	}
 
 	streamer.push = function (chunk) {
