@@ -1,6 +1,8 @@
 <DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+    <meta name="viewport">
 	<title>Caster</title>
 	<style>
 		#video-channel {
@@ -8,18 +10,50 @@
 			min-width: 400px;
 			border: 1px solid #ccc;
 		}
+		h1{
+          font-family: sans-serif;
+        }
+        #holder { 
+          border: 10px dashed #ccc; 
+          width: 60%;
+          height: 50%;
+          margin: 20px auto;
+        }
+        #holder.hover { 
+          border: 10px dashed #0c0;
+        }
+        #holder img {
+          display: block; 
+          margin: 10px auto;
+        }
+        #holder p {
+          margin: 10px; 
+          font-size: 14px;
+        }
+        .hidden { 
+          display: none !important;
+        }
 	</style>
 	<script src="engine.io.js"></script>
 	<script src="https://webrtc-experiment.appspot.com/lib/RTCPeerConnection-v1.4.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="streamer.js"> </script>
 	<script src="initDataChannel.js"></script>
 	
 </head>
 <body>
 
-	<input type="file" title="Choose Video" />
-	<video id="video-channel" autoplay></video>
-	<script>
+	<br>
+    	<h1 align="center">Caster Upload</h1>
+    <br>
+
+	<div id="holder"></div> 
+
+	<video id="video-channel" autoplay class="hidden"></video>
+    
+    <p id="upload" class="hidden"><label>Drag & drop not supported, but you can still upload via this input field:<br><input type="file"></label></p>
+    <p id="filereader" class="hidden">File API & FileReader API not supported</p>
+    <script>
 	var streamer = new Streamer();
 
 	function onData(data) {
@@ -34,6 +68,33 @@
 
 	</script>
 	<script src="main.js"></script>
+    <script>
+        var holder = document.getElementById('holder'),
+            tests = {
+              	dnd: 'draggable' in document.createElement('span')
+            };
+
+        if (tests.dnd) { 
+        	holder.ondragover = function () { this.className = 'hover'; return false; };
+          	holder.ondragend = function () { this.className = ''; return false; };
+          	holder.ondrop = function (e) {
+	            $("#holder").html('');
+	            this.className = '';
+	            e.preventDefault();
+	            console.log("Start WebChannel");
+			    var file = e.dataTransfer.files[0];
+			    streamer.stream(file);
+          	}
+        } 
+        else {
+          	$("#upload").className = '';
+          	fileupload.querySelector('input').onchange = function () {
+            	console.log("Start WebChannel");
+			    var file = this.files[0];
+			    streamer.stream(file);
+          	};
+        }
+    </script>
 	<script>
         /* pre-recorded media receiver */
 

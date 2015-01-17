@@ -2,13 +2,6 @@
 streamer.video = document.querySelector('video');
 streamer.receive()
 
-document.querySelector('input[type=file]').onchange = function() {
-    console.log("Start WebChannel")
-    var file = this.files[0];
-    streamer.stream(this.files[0]);
-    //readVideoFile(file)
-};
-
 var arrayToStoreChunks = [];
 
 function onReadAsDataURL(event, text) {
