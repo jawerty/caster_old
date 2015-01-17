@@ -36,7 +36,7 @@ function Streamer() {
 			if(!blob) return;
                 var size = blob.size,
                     startIndex = 0,
-                    plus = 2;
+                    plus = 128;
 
                 console.debug('one chunk size: <', plus, '>');
 
@@ -46,11 +46,14 @@ function Streamer() {
                         self.push(new window.Uint8Array(e.target.result));
 
                         startIndex += plus;
-                        if (startIndex <= size) window.requestAnimationFrame(inner_streamer);
-                        else
+                        if (startIndex <= size) {
+                            window.requestAnimationFrame(inner_streamer)
+                        } else {
                             self.push({
                                 end: true
                             });
+                        }
+                            
                     };
                     reader.readAsArrayBuffer(blob.slice(startIndex, startIndex + plus));
                 }
@@ -65,7 +68,6 @@ function Streamer() {
     function receive() {
         var sourceBuffer, mediaSource = new MediaSource();
         self.video.src = window.URL.createObjectURL(mediaSource);
-        console.log(mediaSource)
         mediaSource.addEventListener(prefix+'sourceopen', function () {
             self.receiver = mediaSource.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
             self.mediaSource = mediaSource;

@@ -63,14 +63,15 @@ function setChannelEvents(channel, channelNameForConsoleOutput) {
         var data = JSON.parse(event.data);
 
         chunkData = []
+
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
               chunkData.push(data[key]);  
             }
         }
         
-        console.log(chunkData);
         onData(chunkData); 
+        
         if (channelNameForConsoleOutput == "answerer") {
             
             arrayToStoreChunks.push(data.message); // pushing chunks in array
