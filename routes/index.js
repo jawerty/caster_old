@@ -10,5 +10,5 @@ exports.index = function(req, res){
 }; 
 
 exports.streamView = function(req, res){
-	res.send(req.params.id)
+	res.render('stream', { id: req.params.id });
 };
