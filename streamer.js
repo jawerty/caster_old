@@ -36,29 +36,41 @@ function Streamer() {
 			if(!blob) return;
                 var size = blob.size,
                     startIndex = 0,
-                    plus = 128;
+                    plus = 131;
 
                 console.debug('one chunk size: <', plus, '>');
-
+                
                 function inner_streamer() {
                     reader = new window.FileReader();
                     reader.onload = function (e) {
                         self.push(new window.Uint8Array(e.target.result));
-
                         startIndex += plus;
+
                         if (startIndex <= size) {
                             setTimout(function() {window.requestAnimationFrame(inner_streamer), 500});
+                            offererDataChannel.onmessage = function(){
+                                console.log("offerer ran")
+                                window.requestAnimationFrame(inner_streamer);                                 
+                            }  
                         } else {
                             self.push({
                                 end: true
                             });
                         }
-                            
                     };
+                    reader.onloadend = function(e) {
+                        setTimeout(function(){
+                            answererDataChannel.send("done")
+                        }, 250)
+                        
+                    }
+
                     reader.readAsArrayBuffer(blob.slice(startIndex, startIndex + plus));
                 }
 
                 inner_streamer();
+                
+                
         }
 
         startStreaming();
@@ -82,9 +94,11 @@ function Streamer() {
     }
 
     this.append = function (data) {
-		var uint8array = new window.Uint8Array(data);
+        var uint8array = new window.Uint8Array(data);
         self.receiver.appendBuffer(uint8array);
+            	
     };
+
 
     this.end = function (data) {
         self.mediaSource.endOfStream();
