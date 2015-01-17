@@ -1,6 +1,7 @@
+<DOCTYPE html>
 <html>
 <head>
-	<title>WebChannel</title>
+	<title>Caster</title>
 	<style>
 		#video-channel {
 			min-height: 400px;
@@ -26,8 +27,8 @@
 
 	streamer.push = function (chunk) {
 		console.log("pushed")
-		console.log(chunk)
-	    setTimeout(offererDataChannel.send(chunk), 1000);
+		var sentChunk = JSON.stringify(chunk))
+	    setTimeout(offererDataChannel.send(sentChunk), 1000);
 	};
 
 	</script>

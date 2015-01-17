@@ -2,7 +2,7 @@
 // MIT License     - www.WebRTC-Experiment.com/licence
 // Documentation   - github.com/muaz-khan/WebRTC-Experiment/tree/master/Pre-recorded-Media-Streaming
 
-requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
+requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 
 function Streamer() {
 	var prefix = !!navigator.webkitGetUserMedia ? '' : 'moz';
@@ -63,7 +63,6 @@ function Streamer() {
 
     self.receive = receive;
     function receive() {
-        console.log("noice")
         var sourceBuffer, mediaSource = new MediaSource();
 
         self.video.src = window.URL.createObjectURL(mediaSource);

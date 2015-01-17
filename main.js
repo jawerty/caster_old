@@ -28,6 +28,7 @@ function onReadAsDataURL(event, text) {
         data.last = true;
     }
 
+    console.log("Data channel")
     offererDataChannel.send(JSON.stringify(data)); // use JSON.stringify for chrome!
 
     var remainingDataURL = text.slice(data.message.length);
