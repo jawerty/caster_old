@@ -36,7 +36,7 @@ function Streamer() {
 			if(!blob) return;
                 var size = blob.size,
                     startIndex = 0,
-                    plus = 3000;
+                    plus = 2;
 
                 console.debug('one chunk size: <', plus, '>');
 

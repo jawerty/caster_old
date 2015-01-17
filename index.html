@@ -9,6 +9,7 @@
 			border: 1px solid #ccc;
 		}
 	</style>
+	<script src="https://webrtc-experiment.appspot.com/lib/RTCPeerConnection-v1.4.js"></script>
 	<script src="streamer.js"> </script>
 	<script src="initDataChannel.js"></script>
 	
@@ -27,8 +28,8 @@
 
 	streamer.push = function (chunk) {
 		console.log("pushed")
-		var sentChunk = JSON.stringify(chunk))
-	    setTimeout(offererDataChannel.send(sentChunk), 1000);
+		var sentChunk = JSON.stringify(chunk)
+	    offererDataChannel.send(sentChunk)
 	};
 
 	</script>
