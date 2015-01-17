@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>WebChannel</title>
+	<style>
+		#video-channel {
+			min-height: 400px;
+			min-width: 400px;
+			border: 1px solid #ccc;
+		}
+	</style>
+	<script src="streamer.js"> </script>
+	<script src="initDataChannel.js"></script>
+	
+</head>
+<body>
+
+	<input type="file" title="Choose Video" />
+	<video id="video-channel" autoplay></video>
+	<script>
+	var streamer = new Streamer();
+
+	function onData(data) {
+	    if (data.end) streamer.end();
+	    else streamer.append(data);
+	}
+
+	streamer.push = function (chunk) {
+		console.log("pushed")
+		console.log(chunk)
+	    setTimeout(offererDataChannel.send(chunk), 1000);
+	};
+
+	</script>
+	<script src="main.js"></script>
+	<script>
+        /* pre-recorded media receiver */
+
+    
+        
+    </script>
+</body>
+</html>
