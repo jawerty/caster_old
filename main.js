@@ -1,6 +1,5 @@
 
 streamer.video = document.querySelector('video');
-
 streamer.receive()
 
 document.querySelector('input[type=file]').onchange = function() {

@@ -5,16 +5,14 @@ var iceServers = {
 };
 
 var optionalRtpDataChannels = {
-    optional: [{
-        RtpDataChannels: true
-    }]
+    optional: []
 };
 
 var offerer = new webkitRTCPeerConnection(iceServers, optionalRtpDataChannels),
     answerer, answererDataChannel;
 
 var offererDataChannel = offerer.createDataChannel('RTCDataChannel', {
-    reliable: false
+    reliable: true
 });
 
 setChannelEvents(offererDataChannel, 'offerer');
@@ -40,7 +38,7 @@ offerer.createOffer(function (sessionDescription) {
 function createAnswer(offerSDP) {
     answerer = new webkitRTCPeerConnection(iceServers, optionalRtpDataChannels);
     answererDataChannel = answerer.createDataChannel('RTCDataChannel', {
-        reliable: false
+        reliable: true
     });
 
     setChannelEvents(answererDataChannel, 'answerer');
@@ -61,9 +59,18 @@ function setChannelEvents(channel, channelNameForConsoleOutput) {
     channel.onmessage = function (event) {
         console.debug(channelNameForConsoleOutput, 'received a message:', event.data);
         var data = JSON.parse(event.data);
-        console.log("push received")
-        onData(data); 
+
+        chunkData = []
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+              chunkData.push(data[key]);  
+            }
+        }
+        
+        console.log(chunkData);
+        onData(chunkData); 
         if (channelNameForConsoleOutput == "answerer") {
+            
             arrayToStoreChunks.push(data.message); // pushing chunks in array
 
             if (data.last) {
